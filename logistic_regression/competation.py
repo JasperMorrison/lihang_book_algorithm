@@ -11,7 +11,7 @@ import pandas as pd
 from binary_perceptron import Perceptron
 from logistic_regression import LogisticRegression
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ import cv2
 import random
 import time
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # 二值化
@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
     time_1 = time.time()
 
-    raw_data = pd.read_csv('../data/train.csv',header=0)
+    raw_data = pd.read_csv('data/train.csv',header=0)
     data = raw_data.values
 
     imgs = data[0::,1::]

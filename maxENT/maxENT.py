@@ -15,7 +15,7 @@ import random
 
 from collections import defaultdict
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 

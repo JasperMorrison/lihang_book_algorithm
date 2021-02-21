@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 
@@ -29,7 +29,7 @@ def log(func):
 # 二值化
 def binaryzation(img):
     cv_img = img.astype(np.uint8)
-    cv2.threshold(cv_img,50,1,cv2.cv.CV_THRESH_BINARY_INV,cv_img)
+    cv2.threshold(cv_img,50,1,cv2.THRESH_BINARY_INV,cv_img)
     return cv_img
 
 @log
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
-    raw_data = pd.read_csv('../data/train.csv',header=0)
+    raw_data = pd.read_csv('data/train.csv',header=0)
     data = raw_data.values
 
     imgs = data[0::,1::]
