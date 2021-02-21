@@ -2,10 +2,8 @@ import numpy as np
 import struct
 import matplotlib.pyplot as plt
 
-from perceptron import *
-
 def loadImageSet(which=0):
-    print "load image set"
+    print("load image set")
     binfile=None
     if which==0:
         binfile = open("data/train-images.idx3-ubyte", 'rb')
@@ -14,7 +12,7 @@ def loadImageSet(which=0):
     buffers = binfile.read()
 
     head = struct.unpack_from('>IIII' , buffers ,0)
-    print "head,",head
+    print(("head,",head))
 
     offset=struct.calcsize('>IIII')
     imgNum=head[1]
@@ -28,11 +26,11 @@ def loadImageSet(which=0):
 
     binfile.close()
     imgs=np.reshape(imgs,[imgNum,width,height])
-    print "load imgs finished"
+    print("load imgs finished")
     return imgs
 
 def loadLabelSet(which=0):
-    print "load label set"
+    print("load label set")
     binfile=None
     if which==0:
         binfile = open("data/train-labels.idx1-ubyte", 'rb')
@@ -41,7 +39,7 @@ def loadLabelSet(which=0):
     buffers = binfile.read()
 
     head = struct.unpack_from('>II' , buffers ,0)
-    print "head,",head
+    print(("head,",head))
     imgNum=head[1]
 
     offset = struct.calcsize('>II')
@@ -51,7 +49,7 @@ def loadLabelSet(which=0):
     labels=np.reshape(labels,[imgNum,1])
 
     #print labels
-    print 'load label finished'
+    print('load label finished')
     return labels
 
 if __name__=="__main__":
@@ -60,13 +58,10 @@ if __name__=="__main__":
 
     index = 10
 
-    print imgs[index]
-    print labels[index]
+    print((imgs[index]))
+    print((labels[index]))
 
     fig = plt.figure()
     plotwindow = fig.add_subplot(111)
     plt.imshow(imgs[index] , cmap='gray')
-    # plt.show()
-
-    perceptron = Perceptron()
-    perceptron.hog_test(imgs[index])
+    plt.show()

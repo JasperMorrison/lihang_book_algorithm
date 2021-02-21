@@ -65,7 +65,7 @@ class Softmax(object):
         time = 0
 
         while time < self.max_iteration:
-            print('loop %d' % time)
+            print(('loop %d' % time))
             time += 1
             index = random.randint(0, len(labels) - 1)
 
@@ -113,19 +113,19 @@ if __name__ == '__main__':
     # print train_features.shape
 
     time_2 = time.time()
-    print('read data cost '+ str(time_2 - time_1)+' second')
+    print(('read data cost '+ str(time_2 - time_1)+' second'))
 
     print('Start training')
     p = Softmax()
     p.train(train_features, train_labels)
 
     time_3 = time.time()
-    print('training cost '+ str(time_3 - time_2)+' second')
+    print(('training cost '+ str(time_3 - time_2)+' second'))
 
     print('Start predicting')
     test_predict = p.predict(test_features)
     time_4 = time.time()
-    print('predicting cost ' + str(time_4 - time_3) +' second')
+    print(('predicting cost ' + str(time_4 - time_3) +' second'))
 
     score = accuracy_score(test_labels, test_predict)
-    print("The accruacy socre is " + str(score))
+    print(("The accruacy socre is " + str(score)))

@@ -47,13 +47,13 @@ class AdaBoost(object):
         length = self.n*self.N
         self.X_matrix = (ctypes.c_int * length)()
 
-        for i in xrange(self.n):
-            for j in xrange(self.N):
+        for i in range(self.n):
+            for j in range(self.N):
                 self.X_matrix[i*self.N+j] = X[j][i]
 
     def rebuild_Y(self,Y):
         self.C_Y = (ctypes.c_int * self.N)()
-        for i in xrange(self.N):
+        for i in range(self.N):
             self.C_Y[i] = Y[i]
 
 
@@ -78,14 +78,14 @@ class AdaBoost(object):
     def _Z_(self,index,classifier):
         Z = 0
 
-        for i in xrange(self.N):
+        for i in range(self.N):
             Z += self._w_(index,classifier,i)
 
         return Z
 
     def build_c_w(self):
         C_w = (ctypes.c_double * self.N)()
-        for i in xrange(self.N):
+        for i in range(self.N):
             C_w[i] = ctypes.c_double(self.w[i])
         return C_w
 
@@ -93,7 +93,7 @@ class AdaBoost(object):
 
         self._init_parameters_(features,labels)
 
-        for times in xrange(self.M):
+        for times in range(self.M):
             logging.debug('iterater %d' % times)
 
 
@@ -108,7 +108,7 @@ class AdaBoost(object):
 
             em = min_error.value
             best_classifier = (em,feature_index.value,Sign(is_less.value,index))        #(误差率,针对的特征,分类器)
-            print 'em is %s, index is %s' % (str(em),str(feature_index.value))
+            print('em is %s, index is %s' % (str(em),str(feature_index.value)))
 
 
             if em==0:
@@ -120,13 +120,13 @@ class AdaBoost(object):
 
             Z = self._Z_(best_classifier[1],best_classifier[2])
 
-            for i in xrange(self.N):
+            for i in range(self.N):
                 self.w[i] = self._w_(best_classifier[1],best_classifier[2],i)/Z
 
     def _predict_(self,feature):
 
         result = 0.0
-        for i in xrange(self.M):
+        for i in range(self.M):
             index = self.classifier[i][0]
             classifier = self.classifier[i][1]
 
@@ -172,7 +172,7 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
-    print 'Start read data'
+    print('Start read data')
 
     time_1 = time.time()
 
@@ -188,21 +188,21 @@ if __name__ == '__main__':
     train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size=0.33, random_state=23323)
 
     time_2 = time.time()
-    print 'read data cost ',time_2 - time_1,' second','\n'
+    print('read data cost ',time_2 - time_1,' second','\n')
 
-    print 'Start training'
-    train_labels = map(lambda x:2*x-1,train_labels)
+    print('Start training')
+    train_labels = [2*x-1 for x in train_labels]
     ada = AdaBoost()
     ada.train(train_features, train_labels)
 
     time_3 = time.time()
-    print 'training cost ',time_3 - time_2,' second','\n'
+    print('training cost ',time_3 - time_2,' second','\n')
 
-    print 'Start predicting'
+    print('Start predicting')
     test_predict = ada.predict(test_features)
     time_4 = time.time()
-    print 'predicting cost ',time_4 - time_3,' second','\n'
+    print('predicting cost ',time_4 - time_3,' second','\n')
 
-    test_labels = map(lambda x:2*x-1,test_labels)
+    test_labels = [2*x-1 for x in test_labels]
     score = accuracy_score(test_labels,test_predict)
-    print "The accruacy socre is ", score
+    print("The accruacy socre is ", score)

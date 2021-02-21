@@ -119,7 +119,7 @@ def recurse_train(train_set,train_label,features,epsilon):
         return Tree(LEAF,Class = label_set.pop())
 
     # 步骤2——如果features为空
-    (max_class,max_len) = max([(i,len(filter(lambda x:x==i,train_label))) for i in xrange(total_class)],key = lambda x:x[1])
+    (max_class,max_len) = max([(i,len([x for x in train_label if x==i])) for i in range(total_class)],key = lambda x:x[1])
 
     if len(features) == 0:
         return Tree(LEAF,Class = max_class)
@@ -142,7 +142,7 @@ def recurse_train(train_set,train_label,features,epsilon):
         return Tree(LEAF,Class = max_class)
 
     # 步骤5——构建非空子集
-    sub_features = filter(lambda x:x!=max_feature,features)
+    sub_features = [x for x in features if x!=max_feature]
     tree = Tree(INTERNAL,feature=max_feature)
 
     feature_col = np.array(train_set[:,max_feature].flat)
@@ -150,7 +150,7 @@ def recurse_train(train_set,train_label,features,epsilon):
     for feature_value in feature_value_list:
 
         index = []
-        for i in xrange(len(train_label)):
+        for i in range(len(train_label)):
             if train_set[i][max_feature] == feature_value:
                 index.append(i)
 
@@ -197,7 +197,7 @@ if __name__ == '__main__':
     test_predict = predict(test_features,tree)
     score = accuracy_score(test_labels,test_predict)
 
-    print "The accruacy socre is ", score
+    print("The accruacy socre is ", score)
 
 
 
